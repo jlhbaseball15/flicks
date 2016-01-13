@@ -12,7 +12,7 @@ The following **required** functionality is complete:
 - [x] Poster images are loaded using the UIImageView category in the AFNetworking library.
 - [x] User sees a loading state while waiting for the movies API.
 - [x] User can pull to refresh the movie list.
-- [x] User sees an error message when there's a networking error.  
+- [ ] User sees an error message when there's a networking error.  
 
 The following **optional** features are implemented:
 
@@ -40,7 +40,7 @@ Describe any challenges encountered while building the app.
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright 2016 John Henning
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
