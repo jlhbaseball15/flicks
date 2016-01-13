@@ -1,17 +1,17 @@
 //
-//  MoviesViewController.swift
-//  Flicks
+//  TopRatedViewController.swift
+//  
 //
-//  Created by John Henning on 1/5/16.
-//  Copyright © 2016 John Henning. All rights reserved.
+//  Created by John Henning on 1/13/16.
+//
 //
 
 import UIKit
 import AFNetworking
 import EZLoadingActivity
 
-class MoviesViewController: UIViewController, UICollectionViewDataSource,
-    UICollectionViewDelegate {
+class TopRatedViewController: UIViewController, UICollectionViewDataSource,
+UICollectionViewDelegate {
     var refreshControl: UIRefreshControl!
     
     
@@ -20,7 +20,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         collectionView.dataSource = self;
         collectionView.delegate = self;
@@ -32,7 +32,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
         
         
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = NSURL(string:"https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
+        let url = NSURL(string:"https://api.themoviedb.org/3/movie/top_rated?api_key=\(apiKey)")
         let request = NSURLRequest(URL: url!)
         let session = NSURLSession(
             configuration: NSURLSessionConfiguration.defaultSessionConfiguration(),
@@ -48,12 +48,12 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
                         data, options:[]) as? NSDictionary {
                             print("response: \(responseDictionary)")
                             
-                        self.movies = responseDictionary["results"] as! [NSDictionary]
+                            self.movies = responseDictionary["results"] as! [NSDictionary]
                             
-                        
-                        EZLoadingActivity.hide(success: true, animated: false)
-                        self.collectionView.reloadData()
-                        
+                            
+                            EZLoadingActivity.hide(success: true, animated: false)
+                            self.collectionView.reloadData()
+                            
                     }
                     else {
                         EZLoadingActivity.hide(success: false, animated: false)
@@ -75,14 +75,14 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
     
     func collectionView(collectionView: UICollectionView,
         numberOfItemsInSection section: Int) -> Int{
-        EZLoadingActivity.showWithDelay("Loading...", disableUI: true, seconds: 1)
+            EZLoadingActivity.showWithDelay("Loading...", disableUI: true, seconds: 1)
             
-        if let movies = movies {
-            return movies.count
-        } else {
-            return 0
-        }
-        
+            if let movies = movies {
+                return movies.count
+            } else {
+                return 0
+            }
+            
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
@@ -136,7 +136,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
     
     func movieDatabaseAPICall(){
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = NSURL(string:"https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
+        let url = NSURL(string:"https://api.themoviedb.org/3/movie/top_rated?api_key=\(apiKey)")
         let request = NSURLRequest(URL: url!)
         let session = NSURLSession(
             configuration: NSURLSessionConfiguration.defaultSessionConfiguration(),
@@ -165,18 +165,19 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
                 }
         });
         task.resume()
-    
+        
     }
     
-
+    
     /*
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // Get the new view controller using segue.destinationViewController.
+    // Pass the selected object to the new view controller.
     }
     */
-
+    
 }
+
