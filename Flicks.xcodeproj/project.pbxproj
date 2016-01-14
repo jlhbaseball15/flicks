@@ -16,6 +16,7 @@
 		B07F0C4E1C3C39CA0025138D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B07F0C4C1C3C39CA0025138D /* LaunchScreen.storyboard */; };
 		B07F0C561C3C3A480025138D /* MoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07F0C551C3C3A480025138D /* MoviesViewController.swift */; };
 		B097B8E61C45BBEA00B576AA /* CollectionMovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B097B8E51C45BBEA00B576AA /* CollectionMovieCell.swift */; };
+		B0CD77871C48570F00BBD9C6 /* UpcomingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CD77861C48570F00BBD9C6 /* UpcomingViewController.swift */; };
 		EACD1D70BE654B28E0C2ACE6 /* Pods_Flicks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 048E70A4920F9E37FF52B86E /* Pods_Flicks.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		B07F0C4F1C3C39CA0025138D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B07F0C551C3C3A480025138D /* MoviesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesViewController.swift; sourceTree = "<group>"; };
 		B097B8E51C45BBEA00B576AA /* CollectionMovieCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionMovieCell.swift; sourceTree = "<group>"; };
+		B0CD77861C48570F00BBD9C6 /* UpcomingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpcomingViewController.swift; sourceTree = "<group>"; };
 		D70C95C8D1AAD390A30D7225 /* Pods-Flicks.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flicks.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flicks/Pods-Flicks.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -112,6 +114,7 @@
 				B07F0C551C3C3A480025138D /* MoviesViewController.swift */,
 				B030018B1C46D4FC00906832 /* TabBarViewController.swift */,
 				B030018D1C46D4FC00906832 /* TopRatedViewController.swift */,
+				B0CD77861C48570F00BBD9C6 /* UpcomingViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -243,6 +246,7 @@
 				B07F0C411C3C39CA0025138D /* AppDelegate.swift in Sources */,
 				B097B8E61C45BBEA00B576AA /* CollectionMovieCell.swift in Sources */,
 				B030018E1C46D4FC00906832 /* TabBarViewController.swift in Sources */,
+				B0CD77871C48570F00BBD9C6 /* UpcomingViewController.swift in Sources */,
 				B07F0C561C3C3A480025138D /* MoviesViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

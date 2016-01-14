@@ -20,6 +20,7 @@
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="hLf-BM-Zbp"/>
                         <segue destination="1N8-ux-LoJ" kind="relationship" relationship="viewControllers" id="zNm-fA-9JG"/>
+                        <segue destination="pAE-Zq-uSj" kind="relationship" relationship="viewControllers" id="L4U-Zd-bo9"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hBw-cV-YvD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -127,7 +128,7 @@
                             <outletCollection property="gestureRecognizers" destination="qNU-lB-V8Q" appends="YES" id="y93-V6-p3G"/>
                         </connections>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Now Playing" image="video-2" selectedImage="video-2" id="InR-0S-qGG"/>
+                    <tabBarItem key="tabBarItem" title="Now Playing" image="iconmonstr-video-camera-1-24" selectedImage="iconmonstr-video-camera-1-24" id="InR-0S-qGG"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="collectionView" destination="mab-Jl-Rfr" id="VzI-R6-cJJ"/>
@@ -143,7 +144,128 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="12" y="14"/>
+            <point key="canvasLocation" x="-4" y="-314"/>
+        </scene>
+        <!--Upcoming-->
+        <scene sceneID="gZ1-gR-kl7">
+            <objects>
+                <viewController id="pAE-Zq-uSj" customClass="UpcomingViewController" customModule="Flicks" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CvS-ng-kmO">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="pxK-OC-g9k">
+                                <rect key="frame" x="0.0" y="85" width="320" height="483"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="sZO-IY-K7j">
+                                    <size key="itemSize" width="320" height="432"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MovieCell" id="4Yo-1g-j0c" customClass="CollectionMovieCell" customModule="Flicks" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="432"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="432"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="iJz-wA-wyS">
+                                                    <rect key="frame" x="77" y="8" width="168" height="256"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </imageView>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Overview" textAlignment="natural" id="Laa-7f-Ec5">
+                                                    <rect key="frame" x="8" y="320" width="304" height="75"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="tintColor" red="0.7704720223" green="0.14215468940000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Uwj-RA-ZHE">
+                                                    <rect key="frame" x="8" y="275" width="304" height="45"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
+                                                    <color key="textColor" red="1" green="0.0827653104" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <connections>
+                                            <outlet property="overviewtextView" destination="Laa-7f-Ec5" id="FOu-TB-qtF"/>
+                                            <outlet property="posterView" destination="iJz-wA-wyS" id="ozO-am-6EV"/>
+                                            <outlet property="titleLabel" destination="Uwj-RA-ZHE" id="B6b-v5-qF7"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <searchBar contentMode="redraw" barStyle="black" placeholder="Enter A Movie" id="Bpu-cz-vyA">
+                                <rect key="frame" x="0.0" y="41" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <navigationBar contentMode="scaleToFill" id="fUh-iz-inW">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.7704720223" green="0.14215468940000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="barTintColor" red="1" green="0.0827653104" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <offsetWrapper key="textShadowOffset" horizontal="0.0" vertical="0.0"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="Upcoming" id="KzM-gi-RNZ"/>
+                                </items>
+                            </navigationBar>
+                            <view hidden="YES" contentMode="scaleToFill" id="d9w-Eh-NRt">
+                                <rect key="frame" x="0.0" y="85" width="320" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8eg-4r-kl5">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="1" green="0.0827653104" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
+                                        <state key="normal" title="Network Error">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onNetworkErrorButtonClicked:" destination="1N8-ux-LoJ" eventType="primaryActionTriggered" id="PVS-ae-wYX"/>
+                                            <action selector="onNetworkErrorButtonClicked:" destination="pAE-Zq-uSj" eventType="touchUpInside" id="bGt-yU-hxB"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="dfX-KO-8IJ" appends="YES" id="5uI-Pj-1G6"/>
+                        </connections>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Upcoming" image="iconmonstr-video-8-24" selectedImage="iconmonstr-video-8-24" id="UXh-mf-udu"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="collectionView" destination="pxK-OC-g9k" id="cBy-aV-nI0"/>
+                        <outlet property="networkErrorButton" destination="8eg-4r-kl5" id="CS2-Q6-PcR"/>
+                        <outlet property="networkErrorView" destination="d9w-Eh-NRt" id="5Oz-Dl-gNW"/>
+                        <outlet property="searchBar" destination="Bpu-cz-vyA" id="XKS-v2-1M8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jqU-Pa-TAl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="dfX-KO-8IJ">
+                    <connections>
+                        <action selector="OnTap:" destination="pAE-Zq-uSj" id="geN-dx-BfW"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="413" y="18"/>
         </scene>
         <!--Top Rated-->
         <scene sceneID="NW9-Ae-v1N">
@@ -190,11 +312,13 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="432"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="66L-QC-y2g">
-                                                    <rect key="frame" x="77" y="8" width="168" height="256"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Tlw-tz-oDp">
+                                                    <rect key="frame" x="8" y="275" width="304" height="45"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                </imageView>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
+                                                    <color key="textColor" red="1" green="0.0827653104" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Overview" textAlignment="natural" id="iyr-qg-tQk">
                                                     <rect key="frame" x="8" y="320" width="304" height="75"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -204,13 +328,11 @@
                                                     <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Tlw-tz-oDp">
-                                                    <rect key="frame" x="8" y="275" width="304" height="45"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="66L-QC-y2g">
+                                                    <rect key="frame" x="76" y="8" width="168" height="256"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
-                                                    <color key="textColor" red="1" green="0.0827653104" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -248,7 +370,7 @@
                             <outletCollection property="gestureRecognizers" destination="5Sg-Od-USU" appends="YES" id="Uw3-ME-ZAj"/>
                         </connections>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Top Rated" image="star" id="DZc-Ql-Jlk"/>
+                    <tabBarItem key="tabBarItem" title="Top Rated" image="iconmonstr-star-7-24" selectedImage="iconmonstr-star-7-24" id="DZc-Ql-Jlk"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="collectionView" destination="qml-7E-CLY" id="CAm-jC-O55"/>
@@ -260,16 +382,17 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kzk-S3-eLV" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="5Sg-Od-USU">
                     <connections>
-                        <action selector="onTap:" destination="1N8-ux-LoJ" id="pK8-F4-dbI"/>
+                        <action selector="onTap:" destination="1N8-ux-LoJ" id="tLs-52-7gc"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="12" y="654"/>
+            <point key="canvasLocation" x="-4" y="414"/>
         </scene>
     </scenes>
     <resources>
-        <image name="star" width="16" height="16"/>
-        <image name="video-2" width="16" height="16"/>
+        <image name="iconmonstr-star-7-24" width="24" height="24"/>
+        <image name="iconmonstr-video-8-24" width="24" height="24"/>
+        <image name="iconmonstr-video-camera-1-24" width="24" height="24"/>
     </resources>
     <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
 </document>
