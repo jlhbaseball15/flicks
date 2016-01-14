@@ -11,12 +11,19 @@ import AFNetworking
 import EZLoadingActivity
 
 class MoviesViewController: UIViewController, UICollectionViewDataSource,
-    UICollectionViewDelegate {
+    UICollectionViewDelegate, UISearchBarDelegate {
     var refreshControl: UIRefreshControl!
     
     
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
-    var movies: [NSDictionary]?
+    @IBOutlet weak var networkErrorView: UIView!
+    @IBOutlet weak var networkErrorButton: UIButton!
+    var movies: [NSDictionary]!
+    var filteredResults: [NSDictionary]!
+    var searchActive : Bool = false
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,43 +31,14 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
         // Do any additional setup after loading the view.
         collectionView.dataSource = self;
         collectionView.delegate = self;
+        searchBar.delegate = self;
         
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "onRefresh", forControlEvents: UIControlEvents.ValueChanged)
         
         collectionView.insertSubview(refreshControl, atIndex: 0)
-        
-        
-        let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = NSURL(string:"https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
-        let request = NSURLRequest(URL: url!)
-        let session = NSURLSession(
-            configuration: NSURLSessionConfiguration.defaultSessionConfiguration(),
-            delegate:nil,
-            delegateQueue:NSOperationQueue.mainQueue()
-        )
-        
-        
-        let task : NSURLSessionDataTask = session.dataTaskWithRequest(request,
-            completionHandler: { (dataOrNil, response, error) in
-                if let data = dataOrNil {
-                    if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(
-                        data, options:[]) as? NSDictionary {
-                            print("response: \(responseDictionary)")
-                            
-                        self.movies = responseDictionary["results"] as! [NSDictionary]
-                            
-                        
-                        EZLoadingActivity.hide(success: true, animated: false)
-                        self.collectionView.reloadData()
-                        
-                    }
-                    else {
-                        EZLoadingActivity.hide(success: false, animated: false)
-                    }
-                }
-        });
-        task.resume()
+                
+        movieDatabaseAPICall()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -72,13 +50,16 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
         // Dispose of any resources that can be recreated.
     }
     
+
+    
+    
+    
     
     func collectionView(collectionView: UICollectionView,
         numberOfItemsInSection section: Int) -> Int{
-        EZLoadingActivity.showWithDelay("Loading...", disableUI: true, seconds: 1)
             
-        if let movies = movies {
-            return movies.count
+        if let filteredResults = filteredResults {
+            return filteredResults.count
         } else {
             return 0
         }
@@ -89,7 +70,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MovieCell", forIndexPath: indexPath) as! CollectionMovieCell
         
         
-        let movie = movies![indexPath.row]
+        let movie = filteredResults[indexPath.row]
         
         let title = movie["title"] as! String
         let overview = movie["overview"] as! String
@@ -111,7 +92,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
                 }, completion: nil)
             }, failure: nil)
         
-        return cell
+
         
         
         print("row \(indexPath.row)");
@@ -135,6 +116,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
     }
     
     func movieDatabaseAPICall(){
+        EZLoadingActivity.showWithDelay("Loading...", disableUI: true, seconds: 1)
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         let url = NSURL(string:"https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
         let request = NSURLRequest(URL: url!)
@@ -156,17 +138,46 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
                             
                             
                             EZLoadingActivity.hide(success: true, animated: false)
+                            
+                            if self.movies == nil {
+                                self.networkErrorView.hidden = false
+                                self.collectionView.center.y += 30
+                                
+                            }
+                            
+                            self.filteredResults = self.movies
                             self.collectionView.reloadData()
                             
                     }
-                    else {
-                        EZLoadingActivity.hide(success: false, animated: false)
-                    }
+                   
                 }
         });
         task.resume()
     
     }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        filteredResults = searchText.isEmpty ? movies : movies.filter({ (movie: NSDictionary) -> Bool in
+            return (movie["title"] as! String).rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil
+        })
+        self.collectionView.reloadData()
+        
+    }
+    
+    
+    @IBAction func onNetworkErrorButtonClicked(sender: AnyObject) {
+        networkErrorView.hidden = true
+        collectionView.center.y -= 30
+        movieDatabaseAPICall()
+
+    }
+    
+    
+    @IBAction func onTap(sender: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
+    
     
 
     /*
