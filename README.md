@@ -25,7 +25,7 @@ The following **optional** features are implemented:
 The following **additional** features are implemented:
 
 - [x] Made Overview text scrollable
-- [ ] Added Upcoming tab
+- [x] Added Upcoming tab
 
 ## Video Walkthrough 
 
