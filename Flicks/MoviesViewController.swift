@@ -37,12 +37,11 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
         refreshControl.addTarget(self, action: "onRefresh", forControlEvents: UIControlEvents.ValueChanged)
         
         collectionView.insertSubview(refreshControl, atIndex: 0)
-                
-        movieDatabaseAPICall()
+        
     }
     
     override func viewDidAppear(animated: Bool) {
-        
+        movieDatabaseAPICall()
     }
     
     override func didReceiveMemoryWarning() {
@@ -115,7 +114,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
     }
     
     func movieDatabaseAPICall(){
-        EZLoadingActivity.showWithDelay("Loading...", disableUI: true, seconds: 1.0)
+        EZLoadingActivity.show("Loading...", disableUI: true)
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         let url = NSURL(string:"https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
         let request = NSURLRequest(URL: url!)
@@ -124,10 +123,10 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
             delegate:nil,
             delegateQueue:NSOperationQueue.mainQueue()
         )
-        
-        
         let task : NSURLSessionDataTask = session.dataTaskWithRequest(request,
             completionHandler: { (dataOrNil, response, error) in
+
+                
                 if let data = dataOrNil {
                     if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(
                         data, options:[]) as? NSDictionary {
@@ -135,25 +134,42 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
                             
                             self.movies = responseDictionary["results"] as! [NSDictionary]
                             
-                            
                             EZLoadingActivity.hide()
                             
-                            if self.movies == nil {
-                                self.networkErrorView.hidden = false
-                                self.collectionView.center.y += 30
-                                
-                            }
+                            
                             
                             self.filteredResults = self.movies
                             self.collectionView.reloadData()
                             
                     }
+                    
                    
                 }
+            self.networkButtonRefresh(self.movies)
         });
         task.resume()
-    
     }
+    
+    func networkButtonRefresh(movies:[NSDictionary]!){
+        
+        if movies != nil {
+            print("all good")
+            if self.networkErrorView.hidden == false {
+                self.networkErrorView.hidden = true
+                self.collectionView.center.y -= 30
+            }
+        }
+        else {
+            print("nil")
+            EZLoadingActivity.hide()
+            if self.networkErrorView.hidden {
+                self.networkErrorView.hidden = false
+                self.collectionView.center.y += 30
+            }
+            
+        }
+    }
+    
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         
@@ -166,10 +182,8 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
     
     
     @IBAction func onNetworkErrorButtonClicked(sender: AnyObject) {
-        networkErrorView.hidden = true
-        collectionView.center.y -= 30
         movieDatabaseAPICall()
-
+        
     }
     
     

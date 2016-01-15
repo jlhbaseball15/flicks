@@ -45,11 +45,11 @@ UICollectionViewDelegate,UISearchBarDelegate{
         
         
         
-        movieDatabaseAPICall();
+        
     }
     
     override func viewDidAppear(animated: Bool) {
-        filteredResults = movies
+        movieDatabaseAPICall()
     }
     
     override func didReceiveMemoryWarning() {
@@ -131,7 +131,7 @@ UICollectionViewDelegate,UISearchBarDelegate{
     
     
     func movieDatabaseAPICall () -> () {
-        EZLoadingActivity.showWithDelay("Loading...", disableUI: true, seconds: 1.0)
+        EZLoadingActivity.show("Loading...", disableUI: true)
         
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         let url = NSURL(string:"https://api.themoviedb.org/3/movie/top_rated?api_key=\(apiKey)")
@@ -155,11 +155,7 @@ UICollectionViewDelegate,UISearchBarDelegate{
                             
                             EZLoadingActivity.hide()
                             
-                            if self.movies == nil {
-                                self.networkErrorView.hidden = false
-                                self.collectionView.center.y += 30
-                                
-                            }
+                            
                             
                             self.filteredResults = self.movies
                             self.collectionView.reloadData()
@@ -169,10 +165,32 @@ UICollectionViewDelegate,UISearchBarDelegate{
                     }
                     
                 }
+            self.networkButtonRefresh(self.movies)
         });
         task.resume()
         
     }
+    
+    func networkButtonRefresh(movies:[NSDictionary]!){
+        
+        if movies != nil {
+            print("all good")
+            if self.networkErrorView.hidden == false {
+                self.networkErrorView.hidden = true
+                self.collectionView.center.y -= 30
+            }
+        }
+        else {
+            print("nil")
+            EZLoadingActivity.hide()
+            if self.networkErrorView.hidden {
+                self.networkErrorView.hidden = false
+                self.collectionView.center.y += 30
+            }
+            
+        }
+    }
+
     
     @IBAction func onTap(sender: UITapGestureRecognizer) {
         view.endEditing(true)
@@ -180,9 +198,8 @@ UICollectionViewDelegate,UISearchBarDelegate{
     
     
     @IBAction func onNetworkErrorButtonClicked(sender: AnyObject) {
-        networkErrorView.hidden = true
-        collectionView.center.y -= 30
         movieDatabaseAPICall()
+
     }
     
     
