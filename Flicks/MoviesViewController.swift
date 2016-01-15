@@ -115,7 +115,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
     }
     
     func movieDatabaseAPICall(){
-        EZLoadingActivity.showWithDelay("Loading...", disableUI: true, seconds: 1)
+        EZLoadingActivity.showWithDelay("Loading...", disableUI: true, seconds: 1.0)
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         let url = NSURL(string:"https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
         let request = NSURLRequest(URL: url!)
