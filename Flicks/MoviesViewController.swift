@@ -84,7 +84,6 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
         cell.titleLabel.text = title
         cell.overviewtextView.text = overview
         cell.posterView.setImageWithURLRequest(NSURLRequest(URL: imageURL!), placeholderImage: nil, success: { (request, response, image) in
-            cell.posterView.alpha = 0.0
             cell.posterView.image = image
             
             UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
@@ -137,7 +136,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
                             self.movies = responseDictionary["results"] as! [NSDictionary]
                             
                             
-                            EZLoadingActivity.hide(success: true, animated: false)
+                            EZLoadingActivity.hide()
                             
                             if self.movies == nil {
                                 self.networkErrorView.hidden = false

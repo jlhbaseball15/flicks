@@ -52,6 +52,10 @@ UICollectionViewDelegate,UISearchBarDelegate{
         filteredResults = movies
     }
     
+    override func viewWillAppear(animated: Bool) {
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -90,9 +94,9 @@ UICollectionViewDelegate,UISearchBarDelegate{
         cell.titleLabel.text = title
         cell.overviewtextView.text = overview
         cell.posterView.setImageWithURLRequest(NSURLRequest(URL: imageURL!), placeholderImage: nil, success: { (request, response, image) in
-            cell.posterView.alpha = 0.0
+
             cell.posterView.image = image
-            
+
             UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
                 cell.posterView.alpha = 1.0
                 }, completion: nil)
@@ -154,7 +158,7 @@ UICollectionViewDelegate,UISearchBarDelegate{
                             self.movies = responseDictionary["results"] as? [NSDictionary]
                             
                             
-                            EZLoadingActivity.hide(success: true, animated: false)
+                            EZLoadingActivity.hide()
                             
                             if self.movies == nil {
                                 self.networkErrorView.hidden = false
