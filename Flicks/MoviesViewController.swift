@@ -20,6 +20,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
     @IBOutlet weak var networkErrorView: UIView!
     @IBOutlet weak var networkErrorButton: UIButton!
     var movies: [NSDictionary]!
+    var endpoint: String!
     var filteredResults: [NSDictionary]!
     var searchActive : Bool = false
     
@@ -80,8 +81,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
         
         let imageURL = NSURL(string: baseURL + posterPath)
         
-        cell.titleLabel.text = title
-        cell.overviewtextView.text = overview
+    
         cell.posterView.setImageWithURLRequest(NSURLRequest(URL: imageURL!), placeholderImage: nil, success: { (request, response, image) in
             cell.posterView.image = image
             
@@ -116,7 +116,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
     func movieDatabaseAPICall(){
         EZLoadingActivity.show("Loading...", disableUI: true)
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = NSURL(string:"https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
+        let url = NSURL(string:"https://api.themoviedb.org/3/movie/\(endpoint)?api_key=\(apiKey)")
         let request = NSURLRequest(URL: url!)
         let session = NSURLSession(
             configuration: NSURLSessionConfiguration.defaultSessionConfiguration(),
@@ -204,3 +204,4 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
     */
 
 }
+
