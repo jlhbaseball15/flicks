@@ -19,9 +19,9 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var networkErrorView: UIView!
     @IBOutlet weak var networkErrorButton: UIButton!
-    var movies: [NSDictionary]!
+    var movies: [NSDictionary]?
     var endpoint: String!
-    var filteredResults: [NSDictionary]!
+    var filteredResults: [NSDictionary]?
     var searchActive : Bool = false
     var tap : UITapGestureRecognizer!
     
@@ -45,7 +45,6 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
     
     override func viewDidAppear(animated: Bool) {
         
-        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -59,13 +58,21 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
     
 
     
-    
+    func collectionView(collectionView: UICollectionView, didHighlightItemAtIndexPath indexPath: NSIndexPath){
+        let cell = collectionView.cellForItemAtIndexPath(indexPath)
+        cell?.alpha = 0.5
+    }
+    func collectionView(collectionView: UICollectionView, didUnhighlightItemAtIndexPath indexPath: NSIndexPath){
+        let cell = collectionView.cellForItemAtIndexPath(indexPath)
+        cell?.alpha = 1.0
+    }
     
     
     func collectionView(collectionView: UICollectionView,
         numberOfItemsInSection section: Int) -> Int{
             
-        if let filteredResults = filteredResults {
+        if let filteredResults = self.filteredResults {
+            print(filteredResults.count)
             return filteredResults.count
         } else {
             return 0
@@ -76,37 +83,48 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
 
     
     
-    
-    func collectionView(collectionView: UICollectionView, didHighlightItemAtIndexPath indexPath: NSIndexPath){
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MovieCell", forIndexPath: indexPath) as! CollectionMovieCell
-        cell.backgroundColor = UIColor(colorLiteralRed: 1, green: 1, blue: 1, alpha: 1)
-    }
-    
+
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MovieCell", forIndexPath: indexPath) as! CollectionMovieCell
         
         
-        let movie = filteredResults[indexPath.row]
-        
-        let posterPath = movie["poster_path"] as! String
+        let movie = filteredResults![indexPath.row]
         
         let baseURL = "http://image.tmdb.org/t/p/w500"
         
         
-        let imageURL = NSURL(string: baseURL + posterPath)
-        
-    
-        cell.posterView.setImageWithURLRequest(NSURLRequest(URL: imageURL!), placeholderImage: nil, success: { (request, response, image) in
-            cell.posterView.image = image
+        if (movie["poster_path"]!.isKindOfClass(NSNull) == false){
             
-            UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-                cell.posterView.alpha = 1.0
-                }, completion: nil)
-            }, failure: nil)
-        
+            
+            
+            let posterPath = movie["poster_path"] as! String
+            
+            
+            let imageURL = NSURL(string: baseURL + posterPath)
+            
+            
+            cell.posterView.setImageWithURLRequest(NSURLRequest(URL: imageURL!), placeholderImage: nil, success: { (request, response, image) in
+                cell.posterView.image = image
+                
+                UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+                    cell.posterView.alpha = 1.0
+                    }, completion: nil)
+                }, failure: nil)
 
+        }
+        else{
+            let imageURL = NSURL(string: "http://i.imgur.com/R7mqXKL.png")
+            
+            cell.posterView.setImageWithURLRequest(NSURLRequest(URL: imageURL!), placeholderImage: nil, success: { (request, response, image) in
+                cell.posterView.image = image
+                
+                UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+                    cell.posterView.alpha = 1.0
+                    }, completion: nil)
+                }, failure: nil)
         
+        }
         
         print("row \(indexPath.row)");
         return cell;
@@ -147,20 +165,20 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
                         data, options:[]) as? NSDictionary {
                             print("response: \(responseDictionary)")
                             
-                            self.movies = responseDictionary["results"] as! [NSDictionary]
+                            self.movies = responseDictionary["results"] as? [NSDictionary]
                             
                             EZLoadingActivity.hide()
                             
-                            
-                            
                             self.filteredResults = self.movies
+                            print(self.filteredResults![17]["poster_path"]!)
+                            
                             self.collectionView.reloadData()
                             
                     }
                     
                    
                 }
-            self.networkButtonRefresh(self.movies)
+            self.networkButtonRefresh(self.filteredResults)
         });
         task.resume()
     }
@@ -188,7 +206,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         
-        filteredResults = searchText.isEmpty ? movies : movies.filter({ (movie: NSDictionary) -> Bool in
+        filteredResults = searchText.isEmpty ? movies : movies!.filter({ (movie: NSDictionary) -> Bool in
             return (movie["title"] as! String).rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil
         })
         self.collectionView.reloadData()
@@ -227,7 +245,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
             let cell = sender as! UICollectionViewCell
             let indexPath = collectionView.indexPathForCell(cell)
         
-            let movie = filteredResults[(indexPath?.row)!]
+            let movie = filteredResults![(indexPath?.row)!]
         
             let detailsViewController = segue.destinationViewController as! DetailsViewController
         

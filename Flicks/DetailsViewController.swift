@@ -10,9 +10,11 @@ import UIKit
 
 class DetailsViewController: UIViewController {
 
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var posterView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
+    @IBOutlet weak var infoView: UIView!
     
     var movie: NSDictionary!
     
@@ -20,6 +22,9 @@ class DetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        scrollView.contentSize = CGSize(width: scrollView.frame.width, height: infoView.frame.origin.y + infoView.frame.size.height )
+        
+        view.backgroundColor = UIColor(colorLiteralRed: 0, green: 0, blue: 0, alpha: 0.80)
         
         let title = movie["title"] as! String
         let overview = movie["overview"] as! String
@@ -27,33 +32,36 @@ class DetailsViewController: UIViewController {
         titleLabel.text = title
         overviewLabel.text = overview
         
-        let posterPath = movie["poster_path"] as! String
+        overviewLabel.sizeToFit()
         
-        let smallBaseURL = "http://image.tmdb.org/t/p/w342/"
-        let largeBaseURL = "http://image.tmdb.org/t/p/original"
+        if (movie["poster_path"]!.isKindOfClass(NSNull) == false){
+            let posterPath = movie["poster_path"] as! String
         
-        let smallImageURL = NSURL(string: smallBaseURL + posterPath)
-        let largeImageURL = NSURL(string: largeBaseURL + posterPath)
+            let smallBaseURL = "http://image.tmdb.org/t/p/w342/"
+            let largeBaseURL = "http://image.tmdb.org/t/p/original"
+        
+            let smallImageURL = NSURL(string: smallBaseURL + posterPath)
+            let largeImageURL = NSURL(string: largeBaseURL + posterPath)
         
         
-        let smallImageRequest = NSURLRequest(URL: smallImageURL!)
-        let largeImageRequest = NSURLRequest(URL: largeImageURL!)
+            let smallImageRequest = NSURLRequest(URL: smallImageURL!)
+            let largeImageRequest = NSURLRequest(URL: largeImageURL!)
         
-        posterView.setImageWithURLRequest(
-            smallImageRequest,
-            placeholderImage: nil,
-            success: { (smallImageRequest, smallImageResponse, smallImage) -> Void in
+            posterView.setImageWithURLRequest(
+                smallImageRequest,
+                placeholderImage: nil,
+                success: { (smallImageRequest, smallImageResponse, smallImage) -> Void in
                 
-                // smallImageResponse will be nil if the smallImage is already available
-                // in cache (might want to do something smarter in that case).
-                self.posterView.alpha = 0.0
-                self.posterView.image = smallImage;
+                    // smallImageResponse will be nil if the smallImage is already available
+                    // in cache (might want to do something smarter in that case).
+                    self.posterView.alpha = 0.0
+                    self.posterView.image = smallImage;
                 
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
                     
-                    self.posterView.alpha = 1.0
+                        self.posterView.alpha = 1.0
                     
-                    }, completion: { (sucess) -> Void in
+                    }, completion: { (success) -> Void in
                         
                         // The AFNetworking ImageView Category only allows one request to be sent at a time
                         // per ImageView. This code must be in the completion block.
@@ -72,16 +80,26 @@ class DetailsViewController: UIViewController {
                                 
                                 
                         })
-                })
-            },
-            failure: { (request, response, error) -> Void in
+                    })
+                },
+                failure: { (request, response, error) -> Void in
                 // do something for the failure condition
                 // possibly try to get the large image
-        })
+            })
         
+        }
         
-        
-        
+        else {
+            
+            let imageURL = NSURL(string: "http://i.imgur.com/R7mqXKL.png")
+            
+            posterView.setImageWithURLRequest(NSURLRequest(URL: imageURL!), placeholderImage: nil, success: { (request, response, image) in
+                
+                self.posterView.image = image
+                
+                }, failure: nil)
+            
+        }
         
         
         
