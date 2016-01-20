@@ -22,12 +22,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
+        let unselectedColor = UIColor(colorLiteralRed: 1, green: 1, blue: 1, alpha: 1)
+        
+        let selectedColor = UIColor(colorLiteralRed: 0, green: 0, blue: 0, alpha: 1)
+        
         let nowPlayingNavigationController = storyboard.instantiateViewControllerWithIdentifier("MoviesNavigationController") as! UINavigationController
         let nowPlayingViewController =  nowPlayingNavigationController.topViewController as! MoviesViewController
         nowPlayingViewController.endpoint = "now_playing"
         nowPlayingNavigationController.tabBarItem.title = "Now Playing"
         nowPlayingNavigationController.title = "Now Playing"
-        nowPlayingNavigationController.tabBarItem.image = UIImage(named: "iconmonstr-video-camera-1-24")
+        nowPlayingNavigationController.tabBarItem.image = UIImage(named: "iconmonstr-video-camera-24")
+        
+        
         
         let topRatedNavigationController = storyboard.instantiateViewControllerWithIdentifier("MoviesNavigationController") as! UINavigationController
         let topRatedViewController =  topRatedNavigationController.topViewController as! MoviesViewController
@@ -35,6 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         topRatedNavigationController.tabBarItem.title = "Top Rated"
         topRatedNavigationController.title = "Top Rated"
         topRatedNavigationController.tabBarItem.image = UIImage(named: "iconmonstr-star-7-24")
+        
         
         let upcomingNavigationController = storyboard.instantiateViewControllerWithIdentifier("MoviesNavigationController") as! UINavigationController
         let upcomingViewController =  upcomingNavigationController.topViewController as! MoviesViewController
@@ -44,9 +51,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         upcomingNavigationController.title = "Upcoming"
         upcomingNavigationController.tabBarItem.image = UIImage(named: "iconmonstr-video-8-24")
         
+        
         let tabBarController = UITabBarController()
+        tabBarController.tabBar.barTintColor = UIColor(colorLiteralRed: 255/255, green: 21/255, blue: 0/255, alpha: 1)
+        
+        
         
         tabBarController.viewControllers = [nowPlayingNavigationController,topRatedNavigationController,upcomingNavigationController]
+        
+        for item in tabBarController.tabBar.items! {
+            item.image = item.selectedImage?.imageWithColor(unselectedColor).imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+            
+            let attributes = [NSForegroundColorAttributeName: unselectedColor]
+            let selectedAttributes = [NSForegroundColorAttributeName: selectedColor]
+            item.setTitleTextAttributes(attributes, forState: UIControlState.Normal)
+            item.setTitleTextAttributes(selectedAttributes, forState: UIControlState.Selected)
+            
+        }
+        
+        tabBarController.tabBar.tintColor = UIColor(colorLiteralRed: 0, green: 0, blue: 0, alpha: 1)
+        
+
+        
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
         
@@ -140,5 +166,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+}
+
+extension UIImage {
+    func imageWithColor(color1: UIColor) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
+        color1.setFill()
+        
+        let context = UIGraphicsGetCurrentContext()
+        CGContextTranslateCTM(context, 0, self.size.height)
+        CGContextScaleCTM(context, 1.0, -1.0);
+        CGContextSetBlendMode(context, CGBlendMode.Normal)
+        
+        let rect = CGRectMake(0, 0, self.size.width, self.size.height) as CGRect
+        CGContextClipToMask(context, rect, self.CGImage)
+        CGContextFillRect(context, rect)
+        
+        let newImage = UIGraphicsGetImageFromCurrentImageContext() as UIImage
+        UIGraphicsEndImageContext()
+        
+        return newImage
+    }
 }
 

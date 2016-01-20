@@ -23,13 +23,13 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
     var endpoint: String!
     var filteredResults: [NSDictionary]!
     var searchActive : Bool = false
-    
-    
+    var tap : UITapGestureRecognizer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        collectionView.backgroundColor = UIColor(colorLiteralRed: 0, green: 0, blue: 0, alpha: 0.90)
         collectionView.dataSource = self;
         collectionView.delegate = self;
         searchBar.delegate = self;
@@ -38,10 +38,17 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
         refreshControl.addTarget(self, action: "onRefresh", forControlEvents: UIControlEvents.ValueChanged)
         
         collectionView.insertSubview(refreshControl, atIndex: 0)
+        EZLoadingActivity.show("Loading...", disableUI: true)
+        
         
     }
     
     override func viewDidAppear(animated: Bool) {
+        
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
         movieDatabaseAPICall()
     }
     
@@ -66,14 +73,22 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
         
     }
     
+
+    
+    
+    
+    func collectionView(collectionView: UICollectionView, didHighlightItemAtIndexPath indexPath: NSIndexPath){
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MovieCell", forIndexPath: indexPath) as! CollectionMovieCell
+        cell.backgroundColor = UIColor(colorLiteralRed: 1, green: 1, blue: 1, alpha: 1)
+    }
+    
+    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MovieCell", forIndexPath: indexPath) as! CollectionMovieCell
         
         
         let movie = filteredResults[indexPath.row]
         
-        let title = movie["title"] as! String
-        let overview = movie["overview"] as! String
         let posterPath = movie["poster_path"] as! String
         
         let baseURL = "http://image.tmdb.org/t/p/w500"
@@ -114,7 +129,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
     }
     
     func movieDatabaseAPICall(){
-        EZLoadingActivity.show("Loading...", disableUI: true)
+    
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         let url = NSURL(string:"https://api.themoviedb.org/3/movie/\(endpoint)?api_key=\(apiKey)")
         let request = NSURLRequest(URL: url!)
@@ -182,15 +197,26 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
     
     
     @IBAction func onNetworkErrorButtonClicked(sender: AnyObject) {
+        EZLoadingActivity.show("Loading...", disableUI: true)
         movieDatabaseAPICall()
         
     }
     
     
-    @IBAction func onTap(sender: UITapGestureRecognizer) {
-        view.endEditing(true)
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar){
+        tap = UITapGestureRecognizer(target: self, action: "endEditing")
+        view.addGestureRecognizer(tap)
+        
+    }
+   
+    func searchBarTextDidEndEditing(searchBar: UISearchBar){
+        view.removeGestureRecognizer(tap)
     }
     
+    
+    func endEditing(){
+        view.endEditing(true)
+    }
     
 
     
@@ -201,7 +227,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource,
             let cell = sender as! UICollectionViewCell
             let indexPath = collectionView.indexPathForCell(cell)
         
-            let movie = movies[(indexPath?.row)!]
+            let movie = filteredResults[(indexPath?.row)!]
         
             let detailsViewController = segue.destinationViewController as! DetailsViewController
         
