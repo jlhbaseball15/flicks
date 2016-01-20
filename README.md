@@ -53,18 +53,18 @@ Time spent: **X** hours spent in total
 
 The following **required** functionality is completed:
 
-- [ ] User can view movie details by tapping on a cell.
+- [x] User can view movie details by tapping on a cell.
 - [x] User can select from a tab bar for either **Now Playing** or **Top Rated** movies.
-- [ ] Customize the selection effect of the cell.
+- [x] Customize the selection effect of the cell.
 
 The following **optional** features are implemented:
 
-- [ ] For the large poster, load the low resolution image first and then switch to the high resolution image when complete.
+- [x] For the large poster, load the low resolution image first and then switch to the high resolution image when complete.
 - [x] Customize the navigation bar.
 
 The following **additional** features are implemented:
 
-- [ ] List anything else that you can get done to improve the app functionality!
+- [x] UI Redesign
 
 ## Video Walkthrough 
 
