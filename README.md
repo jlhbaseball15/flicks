@@ -70,7 +70,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+![Walkthrough 3](flicks_3.gif)
 
 GIF created with [GifGrabber](https://itunes.apple.com/us/app/gifgrabber/id668208984?mt=12).
 
