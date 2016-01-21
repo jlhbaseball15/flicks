@@ -78,7 +78,7 @@ GIF created with [GifGrabber](https://itunes.apple.com/us/app/gifgrabber/id66820
 
 Describe any challenges encountered while building the app.
 
-
+* The Upcoming movies json had a a missing poster_path for a movie, so I had to write workaround that checks if the value is null. It then replaces it with an image not found image.
 
 
 ## License
