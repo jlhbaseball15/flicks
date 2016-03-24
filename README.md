@@ -1,4 +1,4 @@
-# Project 1 - Flicks
+# Project 1 - *Flicks*
 
 Flicks is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
@@ -47,7 +47,7 @@ Describe any challenges encountered while building the app.
 
 **Flicks** is a movies app displaying box office and top rental DVDs using [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: **X** hours spent in total
+Time spent: **7** hours spent in total
 
 ## User Stories
 
@@ -70,7 +70,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+![Walkthrough 3](flicks_3.gif)
 
 GIF created with [GifGrabber](https://itunes.apple.com/us/app/gifgrabber/id668208984?mt=12).
 
@@ -78,7 +78,7 @@ GIF created with [GifGrabber](https://itunes.apple.com/us/app/gifgrabber/id66820
 
 Describe any challenges encountered while building the app.
 
-
+* The Upcoming movies json had a a missing poster_path for a movie, so I had to write workaround that checks if the value is null. It then replaces it with an image not found image.
 
 
 ## License
