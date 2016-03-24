@@ -5,7 +5,9 @@
 //  Created by Goktug Yilmaz on 02/06/15.
 //  Copyright (c) 2015 Goktug Yilmaz. All rights reserved.
 //
-
+// swiftlint:disable variable_name
+// swiftlint:disable trailing_whitespace
+// swiftlint:disable line_length
 import UIKit
 
 public struct EZLoadingActivity {
@@ -265,4 +267,3 @@ private var topMostController: UIViewController? {
     
     return presentedVC
 }
-

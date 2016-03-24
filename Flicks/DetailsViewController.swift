@@ -5,6 +5,9 @@
 //  Created by John Henning on 1/18/16.
 //  Copyright © 2016 John Henning. All rights reserved.
 //
+// swiftlint:disable variable_name
+// swiftlint:disable trailing_whitespace
+// swiftlint:disable line_length
 
 import UIKit
 
@@ -26,22 +29,22 @@ class DetailsViewController: UIViewController {
         
         view.backgroundColor = UIColor(colorLiteralRed: 0, green: 0, blue: 0, alpha: 0.80)
         
-        let title = movie["title"] as! String
-        let overview = movie["overview"] as! String
+        let title = movie["title"] as? String
+        let overview = movie["overview"] as? String
         
         titleLabel.text = title
         overviewLabel.text = overview
         
         overviewLabel.sizeToFit()
         
-        if (movie["poster_path"]!.isKindOfClass(NSNull) == false){
-            let posterPath = movie["poster_path"] as! String
+        if movie["poster_path"]!.isKindOfClass(NSNull) == false {
+            let posterPath = movie["poster_path"] as? String
         
             let smallBaseURL = "http://image.tmdb.org/t/p/w342/"
             let largeBaseURL = "http://image.tmdb.org/t/p/original"
         
-            let smallImageURL = NSURL(string: smallBaseURL + posterPath)
-            let largeImageURL = NSURL(string: largeBaseURL + posterPath)
+            let smallImageURL = NSURL(string: smallBaseURL + posterPath!)
+            let largeImageURL = NSURL(string: largeBaseURL + posterPath!)
         
         
             let smallImageRequest = NSURLRequest(URL: smallImageURL!)
@@ -55,7 +58,7 @@ class DetailsViewController: UIViewController {
                     // smallImageResponse will be nil if the smallImage is already available
                     // in cache (might want to do something smarter in that case).
                     self.posterView.alpha = 0.0
-                    self.posterView.image = smallImage;
+                    self.posterView.image = smallImage
                 
                     UIView.animateWithDuration(0.3, animations: { () -> Void in
                     
@@ -70,7 +73,7 @@ class DetailsViewController: UIViewController {
                             placeholderImage: smallImage,
                             success: { (largeImageRequest, largeImageResponse, largeImage) -> Void in
                                 
-                                self.posterView.image = largeImage;
+                                self.posterView.image = largeImage
                                 
                             },
                             failure: { (request, response, error) -> Void in
@@ -87,16 +90,10 @@ class DetailsViewController: UIViewController {
                 // possibly try to get the large image
             })
         
-        }
-        
-        else {
-            
+        } else {
             let imageURL = NSURL(string: "http://i.imgur.com/R7mqXKL.png")
-            
             posterView.setImageWithURLRequest(NSURLRequest(URL: imageURL!), placeholderImage: nil, success: { (request, response, image) in
-                
                 self.posterView.image = image
-                
                 }, failure: nil)
             
         }

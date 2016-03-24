@@ -5,6 +5,9 @@
 //  Created by John Henning on 1/5/16.
 //  Copyright © 2016 John Henning. All rights reserved.
 //
+// swiftlint:disable variable_name
+// swiftlint:disable trailing_whitespace
+// swiftlint:disable line_length
 
 import UIKit
 import CoreData
@@ -26,30 +29,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let selectedColor = UIColor(colorLiteralRed: 0, green: 0, blue: 0, alpha: 1)
         
-        let nowPlayingNavigationController = storyboard.instantiateViewControllerWithIdentifier("MoviesNavigationController") as! UINavigationController
-        let nowPlayingViewController =  nowPlayingNavigationController.topViewController as! MoviesViewController
-        nowPlayingViewController.endpoint = "now_playing"
-        nowPlayingNavigationController.tabBarItem.title = "Now Playing"
-        nowPlayingNavigationController.title = "Now Playing"
-        nowPlayingNavigationController.tabBarItem.image = UIImage(named: "iconmonstr-video-camera-24")
+        let nowPlayingNavigationController = storyboard.instantiateViewControllerWithIdentifier("MoviesNavigationController") as? UINavigationController
+        let nowPlayingViewController =  nowPlayingNavigationController!.topViewController as? MoviesViewController
+        nowPlayingViewController!.endpoint = "now_playing"
+        nowPlayingNavigationController!.tabBarItem.title = "Now Playing"
+        nowPlayingNavigationController!.title = "Now Playing"
+        nowPlayingNavigationController!.tabBarItem.image = UIImage(named: "iconmonstr-video-camera-24")
         
         
         
-        let topRatedNavigationController = storyboard.instantiateViewControllerWithIdentifier("MoviesNavigationController") as! UINavigationController
-        let topRatedViewController =  topRatedNavigationController.topViewController as! MoviesViewController
-        topRatedViewController.endpoint = "top_rated"
-        topRatedNavigationController.tabBarItem.title = "Top Rated"
-        topRatedNavigationController.title = "Top Rated"
-        topRatedNavigationController.tabBarItem.image = UIImage(named: "iconmonstr-star-7-24")
+        let topRatedNavigationController = storyboard.instantiateViewControllerWithIdentifier("MoviesNavigationController") as? UINavigationController
+        let topRatedViewController =  topRatedNavigationController!.topViewController as? MoviesViewController
+        topRatedViewController!.endpoint = "top_rated"
+        topRatedNavigationController!.tabBarItem.title = "Top Rated"
+        topRatedNavigationController!.title = "Top Rated"
+        topRatedNavigationController!.tabBarItem.image = UIImage(named: "iconmonstr-star-7-24")
         
         
-        let upcomingNavigationController = storyboard.instantiateViewControllerWithIdentifier("MoviesNavigationController") as! UINavigationController
-        let upcomingViewController =  upcomingNavigationController.topViewController as! MoviesViewController
-        upcomingViewController.endpoint = "upcoming"
+        let upcomingNavigationController = storyboard.instantiateViewControllerWithIdentifier("MoviesNavigationController") as? UINavigationController
+        let upcomingViewController =  upcomingNavigationController!.topViewController as? MoviesViewController
+        upcomingViewController!.endpoint = "upcoming"
         
-        upcomingNavigationController.tabBarItem.title = "Upcoming"
-        upcomingNavigationController.title = "Upcoming"
-        upcomingNavigationController.tabBarItem.image = UIImage(named: "iconmonstr-video-8-24")
+        upcomingNavigationController!.tabBarItem.title = "Upcoming"
+        upcomingNavigationController!.title = "Upcoming"
+        upcomingNavigationController!.tabBarItem.image = UIImage(named: "iconmonstr-video-8-24")
         
         
         let tabBarController = UITabBarController()
@@ -57,7 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         
-        tabBarController.viewControllers = [nowPlayingNavigationController,topRatedNavigationController,upcomingNavigationController]
+        tabBarController.viewControllers = [nowPlayingNavigationController!, topRatedNavigationController!, upcomingNavigationController!]
         
         for item in tabBarController.tabBar.items! {
             item.image = item.selectedImage?.imageWithColor(unselectedColor).imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
@@ -175,7 +178,7 @@ extension UIImage {
         
         let context = UIGraphicsGetCurrentContext()
         CGContextTranslateCTM(context, 0, self.size.height)
-        CGContextScaleCTM(context, 1.0, -1.0);
+        CGContextScaleCTM(context, 1.0, -1.0)
         CGContextSetBlendMode(context, CGBlendMode.Normal)
         
         let rect = CGRectMake(0, 0, self.size.width, self.size.height) as CGRect
@@ -188,4 +191,3 @@ extension UIImage {
         return newImage
     }
 }
-
